@@ -4,12 +4,11 @@ import java.util.ArrayList;
 
 public class Greedy {
 
-	private ArrayList<Integer> subSet;
 	/**
 	 * Constructor
 	 */
 	public Greedy(){
-		setSubSet(new ArrayList<>());
+		
 	}
 	/**
 	 * solve
@@ -18,36 +17,31 @@ public class Greedy {
 	 */
 	public Solution solve(Problem problem){
 		Solution solution = new Solution();
-		double currentSummation = initialSubSet(problem);
+		double currentSummation = initialSubSet(problem, solution);
 		double improvedSumation = currentSummation;
-		double currentMD = currentSummation/(double)subSet.size();
-		double improvedMD = currentMD;
+		double improvedMD = currentSummation/(double)solution.size();
 		int nodeToPutInSolution = -1;//indica el nodo a meter en la solucion
 		do{
 			if(nodeToPutInSolution > -1){//si se encontro una solucion que mejora la actual...actualizar
-				subSet.add(nodeToPutInSolution);
+				solution.addNode(nodeToPutInSolution);
 				currentSummation = improvedSumation;
 				problem.getNodesOutsideSolution().remove((Object)nodeToPutInSolution);//quitar del array de nodos fuera de la solucion
-				nodeToPutInSolution = -1;
 			}
 			solution.setMdValue(improvedMD);
 			//recorrer los nodos de la solucion y unirlos a los que no están a ver si mejora
-			for (int i = 0; i < subSet.size(); i++) {
+			for (int i = 0; i <solution.size(); i++) {
 				for (int j= 0; j < problem.getNodesOutsideSolution().size(); j++) {
-					
-					if((currentSummation + problem.getDistance(subSet.get(i), 
-							problem.getNodesOutsideSolution().get(j)))/(double)(subSet.size()+1) > improvedMD){
-						improvedSumation = currentSummation + problem.getDistance(subSet.get(i), 
-								problem.getNodesOutsideSolution().get(j));
-						improvedMD = (improvedSumation/(double)(subSet.size()+1)); 
-						nodeToPutInSolution = problem.getNodesOutsideSolution().get(j);
+					if((currentSummation + problem.getDistance(solution.getNode(i), 
+							problem.getNodesOutsideSolution().get(j)))/(double)(solution.size()+1) > improvedMD){
 						
+						improvedSumation = currentSummation + problem.getDistance(solution.getNode(i), 
+								problem.getNodesOutsideSolution().get(j));
+						improvedMD = (improvedSumation/(double)(solution.size()+1)); 
+						nodeToPutInSolution = problem.getNodesOutsideSolution().get(j);
 					}
 				}
 			}	
 		}while(solution.getMdValue() < improvedMD);//repetir hasta que no mejore
-		solution.setSubSet(subSet);
-		setSubSet(new ArrayList<>());//reset data
 		return solution;
 	}
 	/**
@@ -55,8 +49,9 @@ public class Greedy {
 	 * @param problem
 	 * @return
 	 */
-	public double initialSubSet(Problem problem){
+	public double initialSubSet(Problem problem, Solution solution){
 		double max = 0.0;
+		ArrayList<Integer> subSet = new ArrayList<>();
 		//inicial subset
 		for (int i = 0; i < problem.getNumberOfNodes(); i++) {
 			for (int j = 0; j < problem.getNumberOfNodes(); j++) {
@@ -71,10 +66,7 @@ public class Greedy {
 		for (int i = 0; i < subSet.size(); i++) {
 			problem.getNodesOutsideSolution().remove(subSet.get(i));
 		}
+		solution.setSubSet(subSet);
 		return max;
 	}
-	public void setSubSet(ArrayList<Integer> subSet) {
-		this.subSet = subSet;
-	}
-	
 }

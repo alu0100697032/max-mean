@@ -44,17 +44,31 @@ public class Solution {
 		this.mdValue = mdValue;
 	}
 	/**
-	 * getSubSet
-	 * @return
-	 */
-	public ArrayList<Integer> getSubSet() {
-		return subSet;
-	}
-	/**
 	 * setSubSet
 	 * @param subSet
 	 */
 	public void setSubSet(ArrayList<Integer> subSet) {
 		this.subSet = subSet;
+	}
+	/**
+	 * 
+	 * @param node
+	 */
+	public void addNode(int node){
+		subSet.add(node);
+	}
+	/**
+	 * 
+	 * @return
+	 */
+	public int getNode(int i){
+		return subSet.get(i);
+	}
+	/**
+	 * 
+	 * @return
+	 */
+	public int size(){
+		return subSet.size();
 	}
 }
