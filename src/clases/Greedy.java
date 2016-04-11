@@ -18,31 +18,34 @@ public class Greedy {
 	 */
 	public Solution solve(Problem problem){
 		Solution solution = new Solution();
-		int currentSummation = initialSubSet(problem);
-		int improvedSumation = currentSummation;
-		int nodeToPutInSolution = -1;
+		double currentSummation = initialSubSet(problem);
+		double improvedSumation = currentSummation;
 		double currentMD = currentSummation/(double)subSet.size();
 		double improvedMD = currentMD;
+		int nodeToPutInSolution = -1;//indica el nodo a meter en la solucion
 		do{
-			if(nodeToPutInSolution != -1){
+			if(nodeToPutInSolution > -1){//si se encontro una solucion que mejora la actual...actualizar
 				subSet.add(nodeToPutInSolution);
 				currentSummation = improvedSumation;
-				problem.getNodesOutsideSolution().remove(nodeToPutInSolution);
+				problem.getNodesOutsideSolution().remove((Object)nodeToPutInSolution);//quitar del array de nodos fuera de la solucion
 				nodeToPutInSolution = -1;
 			}
 			solution.setMdValue(improvedMD);
+			//recorrer los nodos de la solucion y unirlos a los que no están a ver si mejora
 			for (int i = 0; i < subSet.size(); i++) {
 				for (int j= 0; j < problem.getNodesOutsideSolution().size(); j++) {
+					
 					if((currentSummation + problem.getDistance(subSet.get(i), 
-							problem.getNodesOutsideSolution().get(j))/(double)(subSet.size()+1)) > improvedMD){
+							problem.getNodesOutsideSolution().get(j)))/(double)(subSet.size()+1) > improvedMD){
 						improvedSumation = currentSummation + problem.getDistance(subSet.get(i), 
 								problem.getNodesOutsideSolution().get(j));
 						improvedMD = (improvedSumation/(double)(subSet.size()+1)); 
 						nodeToPutInSolution = problem.getNodesOutsideSolution().get(j);
+						
 					}
 				}
 			}	
-		}while(solution.getMdValue() < improvedMD);
+		}while(solution.getMdValue() < improvedMD);//repetir hasta que no mejore
 		solution.setSubSet(subSet);
 		setSubSet(new ArrayList<>());//reset data
 		return solution;
@@ -52,8 +55,8 @@ public class Greedy {
 	 * @param problem
 	 * @return
 	 */
-	public int initialSubSet(Problem problem){
-		int max = 0;
+	public double initialSubSet(Problem problem){
+		double max = 0.0;
 		//inicial subset
 		for (int i = 0; i < problem.getNumberOfNodes(); i++) {
 			for (int j = 0; j < problem.getNumberOfNodes(); j++) {
