@@ -7,13 +7,13 @@ public class Problem {
 	/**
 	 * Atributos
 	 */
-	private ArrayList<ArrayList<Integer>> distances;
+	private ArrayList<ArrayList<Double>> distances;
 	private ArrayList<Integer> nodesOutsideSolution;
 	/**
 	 * Constructor
 	 * @param distances
 	 */
-	public Problem(ArrayList<ArrayList<Integer>> distances){
+	public Problem(ArrayList<ArrayList<Double>> distances){
 		setDistances(distances);
 		nodesOutsideSolution = new ArrayList<>();
 		for (int i = 0; i < distances.size(); i++) {
@@ -26,14 +26,14 @@ public class Problem {
 	 * @param j
 	 * @return
 	 */
-	public int getDistance(int i, int j) {
+	public double getDistance(int i, int j) {
 		return distances.get(i).get(j);
 	}
 	/**
 	 * setDistances
 	 * @param distances
 	 */
-	public void setDistances(ArrayList<ArrayList<Integer>> distances) {
+	public void setDistances(ArrayList<ArrayList<Double>> distances) {
 		this.distances = distances;
 	}
 	/**

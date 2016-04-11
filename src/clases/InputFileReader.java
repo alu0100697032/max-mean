@@ -5,24 +5,35 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.print.attribute.standard.Sides;
+
 public class InputFileReader {
 
 	/** 
 	 * Atributes
 	 */
-	private ArrayList<ArrayList<Integer>> matrizDistancias;
+	private ArrayList<ArrayList<Double>> matrizDistancias;
 	
 	/**
 	 * Constructor: ReadInputFile
 	 */
 	public InputFileReader(String fileName) {
 		String line = "";
-		matrizDistancias = new ArrayList<>();
+		int i = 0;
+		int j = 1;
 		BufferedReader br = null;
 		try {
 			br = new BufferedReader(new FileReader(fileName));
-			while ((line = br.readLine()) != null)
-				parseLine(line);
+			int size = Integer.parseInt(br.readLine());
+			initializeDistances(size);
+			while ((line = br.readLine()) != null){
+				insertValue(Double.parseDouble(line), i, j);
+				j++;
+				if(j >= size){ 
+					i++;
+					j = i + 1;
+				}
+			}
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -35,16 +46,25 @@ public class InputFileReader {
 		}
 	}
 	/**
+	 * 
+	 * @param br
+	 */
+	public void initializeDistances(int size){
+		matrizDistancias = new ArrayList<>();
+		for (int i = 0; i < size; i++) {
+			matrizDistancias.add(new ArrayList<>());
+			for (int j = 0; j < size; j++) {
+				matrizDistancias.get(i).add(0.0);
+			}
+		}		
+	}
+	/**
 	 * parseLine
 	 * @param line
 	 */
-	public void parseLine(String line){
-		ArrayList<Integer> lineValues = new ArrayList<>();
-		String[] values = line.split(" ");
-		for (int i = 0; i < values.length; i++) {
-			lineValues.add(Integer.parseInt(values[i]));
-		}
-		matrizDistancias.add(lineValues);
+	public void insertValue(Double value, int i, int j){
+		matrizDistancias.get(i).set(j, value);
+		matrizDistancias.get(j).set(i, value);
 	}
 	/**
 	 * showMatriz
@@ -61,7 +81,7 @@ public class InputFileReader {
 	 * 
 	 * @return
 	 */
-	public ArrayList<ArrayList<Integer>> getDistancias(){
+	public ArrayList<ArrayList<Double>> getDistancias(){
 		return matrizDistancias;
 	}
 }
