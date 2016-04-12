@@ -21,6 +21,13 @@ public class Problem {
 		}
 	}
 	/**
+	 * 
+	 * @return
+	 */
+	public int size(){
+		return distances.size();
+	}
+	/**
 	 * getDistance from i to j
 	 * @param i
 	 * @param j

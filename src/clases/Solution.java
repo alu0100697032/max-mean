@@ -8,13 +8,23 @@ public class Solution {
 	 * Atributos
 	 */
 	private double mdValue;
-	private ArrayList<Integer> subSet;
+	private ArrayList<Boolean> subSet;
 	/**
 	 * Constructor
 	 */
-	public Solution(){
-		setMdValue(0);
-		setSubSet(new ArrayList<>());
+	public Solution(int size){
+		mdValue = 0;
+		subSet = new ArrayList<Boolean>();
+		for (int i = 0; i < size; i++) {
+			subSet.add(false);
+		}
+	}
+	/**
+	 * 
+	 * @param distances
+	 */
+	public void setMdValue(ArrayList<ArrayList<Double>> distances){
+		
 	}
 	/**
 	 * 
@@ -37,38 +47,11 @@ public class Solution {
 		return aux;
 	}
 	/**
-	 * setMdValue
-	 * @param mdValue
-	 */
-	public void setMdValue(double mdValue) {
-		this.mdValue = mdValue;
-	}
-	/**
-	 * setSubSet
-	 * @param subSet
-	 */
-	public void setSubSet(ArrayList<Integer> subSet) {
-		this.subSet = subSet;
-	}
-	/**
 	 * 
 	 * @param node
 	 */
-	public void addNode(int node){
-		subSet.add(node);
+	public void setNodeActive(int node){
+		subSet.set(node, true);
 	}
 	/**
-	 * 
-	 * @return
-	 */
-	public int getNode(int i){
-		return subSet.get(i);
-	}
-	/**
-	 * 
-	 * @return
-	 */
-	public int size(){
-		return subSet.size();
-	}
 }

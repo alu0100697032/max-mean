@@ -16,7 +16,7 @@ public class Greedy {
 	 * @return
 	 */
 	public Solution solve(Problem problem){
-		Solution solution = new Solution();
+		Solution solution = new Solution(problem.size());
 		double currentSummation = initialSubSet(problem, solution);
 		double improvedSumation = currentSummation;
 		double improvedMD = currentSummation/(double)solution.size();
@@ -28,7 +28,7 @@ public class Greedy {
 				problem.getNodesOutsideSolution().remove((Object)nodeToPutInSolution);//quitar del array de nodos fuera de la solucion
 			}
 			solution.setMdValue(improvedMD);
-			//recorrer los nodos de la solucion y unirlos a los que no están a ver si mejora
+			//recorrer los nodos de la solucion y unirlos a los que no estï¿½n a ver si mejora
 			for (int i = 0; i <solution.size(); i++) {
 				for (int j= 0; j < problem.getNodesOutsideSolution().size(); j++) {
 					if((currentSummation + problem.getDistance(solution.getNode(i), 
