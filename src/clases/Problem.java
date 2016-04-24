@@ -10,8 +10,7 @@ public class Problem {
 	private ArrayList<ArrayList<Double>> distances;
 	private ArrayList<Integer> nodesOutsideSolution;
 	/**
-	 * Constructor
-	 * @param distances
+	 * Constructor: Problem
 	 */
 	public Problem(ArrayList<ArrayList<Double>> distances){
 		setDistances(distances);
@@ -21,35 +20,39 @@ public class Problem {
 		}
 	}
 	/**
-	 * 
-	 * @return
+	 * evaluate
+	 */
+	public double evaluate(Solution solution) {
+		double value = 0.0;
+		for (int i = 0; i < solution.getSubset().size(); i++) {
+			for (int j = i + 1; j < solution.getSubset().size(); j++) {
+				if(solution.getPairActive(i, j))
+					value += distances.get(i).get(j);
+			}
+		}
+		return value/solution.getSolutionSize();
+	}
+	/**
+	 * size
 	 */
 	public int size(){
 		return distances.size();
 	}
 	/**
-	 * getDistance from i to j
-	 * @param i
-	 * @param j
-	 * @return
+	 * getDistance
 	 */
 	public double getDistance(int i, int j) {
 		return distances.get(i).get(j);
 	}
 	/**
 	 * setDistances
-	 * @param distances
 	 */
 	public void setDistances(ArrayList<ArrayList<Double>> distances) {
 		this.distances = distances;
 	}
 	/**
-	 * getNumberOfNodes
-	 * @return
+	 * getNodesOutsideSolution
 	 */
-	public int getNumberOfNodes(){
-		return distances.size();
-	}
 	public ArrayList<Integer> getNodesOutsideSolution() {
 		return nodesOutsideSolution;
 	}
