@@ -11,13 +11,13 @@ public class Greedy {
 		
 	}
 	/**
-	 * solve
+	 * solve: ejecuta el algoritmo
 	 */
 	public Solution solve(Problem problem){
 		Solution solution = new Solution(problem.size());
 		Solution solutionStar;
-		initialSolution(problem, solution); // seleccionar la arista con mayor afinidad
-		do{
+		initialSolution(problem, solution); // seleccionar la arista con mayor afinidad para generar una solucion inicial
+		do{//repetir
 			solutionStar = (Solution) solution.clone(); //S* = S
 			int bestNode = -1;
 			double maxMd = 0.0;
@@ -41,7 +41,7 @@ public class Greedy {
 				solution.setMdValue(maxMd);
 				problem.getNodesOutsideSolution().remove((Object)bestNode);
 			}
-		}while(!solution.getSubset().equals(solutionStar.getSubset()));///repetir hasta que no mejore
+		}while(!solution.getSubset().equals(solutionStar.getSubset()));///repetir mientras la solucion mejore
 		return solutionStar;
 	}
 	/**
@@ -50,7 +50,7 @@ public class Greedy {
 	public void initialSolution(Problem problem, Solution solution){
 		double max = 0.0;
 		ArrayList<Integer> subSet = new ArrayList<>();
-		//inicial subset
+		//busca la arista de mayor coste
 		for (int i = 0; i < problem.size(); i++) {
 			for (int j = 0; j < problem.size(); j++) {
 				if(problem.getDistance(i, j) > max){
@@ -61,10 +61,12 @@ public class Greedy {
 				}
 			}
 		}
+		//mete en la solucion los nodos que unen la arista obtenida anteriormente
 		for (int i = 0; i < subSet.size(); i++) {
 			problem.getNodesOutsideSolution().remove((Object)subSet.get(i));
 			solution.setNodeTrue(subSet.get(i));
 		}
+		//fija el valor objetivo de la solucion actual
 		solution.setMdValue(problem.evaluate(solution));
 	}
 }

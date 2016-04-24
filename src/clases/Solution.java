@@ -7,9 +7,9 @@ public class Solution implements Cloneable{
 	/**
 	 * Atributos
 	 */
-	private double mdValue;
-	private ArrayList<Boolean> subSet;
-	private int solutionSize;
+	private double mdValue;				//valor objetivo
+	private ArrayList<Boolean> subSet;	//array de booleanos que representa la solucion
+	private int solutionSize;			//numero de nodos dentro de la solucion
 	/**
 	 * Constructor: Solution
 	 */
@@ -20,12 +20,6 @@ public class Solution implements Cloneable{
 		for (int i = 0; i < size; i++) {
 			subSet.add(false);
 		}
-	}
-	/**
-	 * setMdValue
-	 */
-	public void setMdValue(double value){
-		mdValue = value;
 	}
 	/*
 	 * (non-Javadoc)
@@ -41,34 +35,40 @@ public class Solution implements Cloneable{
 		return toS;
 	}
 	/**
-	 * getMdValue
+	 * setMdValue: fija el valor objetivo
+	 */
+	public void setMdValue(double value){
+		mdValue = value;
+	}
+	/**
+	 * getMdValue: devuelve el valor objetivo
 	 */
 	public double getMdValue() {
 		double aux = mdValue;
 		return aux;
 	}
 	/**
-	 * setNodeActive
+	 * setNodeActive: fija un nodo como dentro de la solucion
 	 */
 	public void setNodeTrue(int node){
 		subSet.set(node, true);
 		solutionSize++;
 	}
 	/**
-	 * setNodeFalse
+	 * setNodeFalse: fija un nodo como fuera de la solucion
 	 */
 	public void setNodeFalse(int node){
 		subSet.set(node, false);
 		solutionSize--;
 	}
 	/**
-	 * getNodeActive
+	 * getNodeActive: devuelve si un nodo está o no en la solucion
 	 */
 	public boolean getNodeActive(int node) {
 		return subSet.get(node);
 	}
 	/**
-	 * getPairActive
+	 * getPairActive: devuelve si el par de nodos dado están en la solucion
 	 */
 	public boolean getPairActive(int i, int j) {
 		if(subSet.get(i) == true && subSet.get(j) == true)
@@ -77,13 +77,13 @@ public class Solution implements Cloneable{
 			return false;
 	}
 	/**
-	 * getSubset
+	 * getSubset: devuelve el array que representa la solucion
 	 */
 	public ArrayList<Boolean> getSubset(){
 		return subSet;
 	}
 	/**
-	 * getSolutionSize
+	 * getSolutionSize: devuelve el número de nodos dentro de la solución
 	 */
 	public int getSolutionSize() {
 		int aux = solutionSize;

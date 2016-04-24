@@ -18,16 +18,16 @@ public class GRASP {
 		
 	}
 	/**
-	 * solve
+	 * solve: ejecuta el algoritmo 
 	 */
 	public Solution solve(Problem problem, int lrcSize) {
 		Solution solution = new Solution(problem.size());
-		constructivePhase(problem, solution, lrcSize);
-		Solution solutionStar = localSearch(problem, solution);
+		constructivePhase(problem, solution, lrcSize);//LRC
+		Solution solutionStar = localSearch(problem, solution);//Busqueda local hasta que no mejore
 		return solutionStar; 
 	}
 	/**
-	 * constructivePhase
+	 * constructivePhase: creamos la LRC y elegimos al azar un candidato
 	 */
 	public void constructivePhase(Problem problem, Solution solution, int lrcSize) {
 		double max = 0.0;
@@ -36,6 +36,7 @@ public class GRASP {
 		ArrayList<Integer> subSet = new ArrayList<>();
 		ArrayList<ArrayList<Integer>> lrc = new ArrayList<>();
 		
+		//creamos una LRC con los lrcDize número de candidatos dado
 		while(iteration < lrcSize) {
 			for (int i = 0; i < problem.size(); i++) {
 				for (int j = 0; j < problem.size(); j++) {
@@ -57,11 +58,12 @@ public class GRASP {
 			subSet.clear();
 			iteration++;
 		}
+		//mostramos a modo de informacion/debug
 		System.out.println("1) LRC: \n");
 		for (int i = 0; i < lrc.size(); i++) {
 			System.out.println("LRC " + i + ": " + lrc.get(i).toString());
 		}
-		//elegir aleatoriamente 
+		//elegir aleatoriamente un candidato
 		Random random = new Random();
 		int randomNumber = (int)(random.nextDouble() * lrcSize);
 		System.out.println("\nElegido: " + randomNumber + "\n");
@@ -81,10 +83,11 @@ public class GRASP {
 	public Solution localSearch(Problem problem, Solution solution) {
 		Solution solutionStar;
 		System.out.println("\n2) Busqueda local:");
-		do {
+		do {//repetir
 			solutionStar = (Solution) solution.clone();
 			int bestNode = -1;
 			double maxMd = 0.0;
+			//añadimos nodos a la solucion para ver si el valor objetivo mejora
 			for (int i = 0; i < problem.size(); i++) {
 				if(!solution.getNodeActive(i)) {
 					solution.setNodeTrue(i);
@@ -95,12 +98,13 @@ public class GRASP {
 					solution.setNodeFalse(i);
 				}
 			}
+			//metemos en la solucion el que más mejore la solucion si es que hay alguno
 			if(bestNode != -1) {
 				solution.setNodeTrue(bestNode);
 				solution.setMdValue(problem.evaluate(solution));
 				problem.getNodesOutsideSolution().remove((Object)bestNode);
 			}
-		} while (!solution.getSubset().equals(solutionStar.getSubset()));
+		} while (!solution.getSubset().equals(solutionStar.getSubset()));//mientras la solucion mejore
 		return solutionStar;
 	}
 }
