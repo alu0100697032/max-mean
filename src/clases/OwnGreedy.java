@@ -49,6 +49,6 @@ public class OwnGreedy {
 		//calculamos el valor objetivo
 		solution.setMdValue(problem.evaluate(solution));
 		problem.getNodesOutsideSolution().clear();
-		System.out.println("Initial solution:\n" + solution.toString());
+		//System.out.println("Initial solution:\n" + solution.toString());
 	}
 }

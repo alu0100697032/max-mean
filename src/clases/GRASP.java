@@ -57,15 +57,15 @@ public class GRASP {
 			iteration++;
 		}
 		//mostramos a modo de informacion/debug
-		System.out.println("1) LRC: \n");
+		/*System.out.println("1) LRC: \n");
 		for (int i = 0; i < lrc.size(); i++) {
 			System.out.println("LRC " + i + ": " + lrc.get(i).toString());
-		}
+		}*/
 		//elegir aleatoriamente un candidato
 		Random random = new Random();
 		int randomNumber = (int)(random.nextDouble() * lrcSize);
-		System.out.println("\nElegido: " + randomNumber + "\n");
-		System.out.println("Valor objetivo: " + problem.getDistance(lrc.get(randomNumber).get(0), lrc.get(randomNumber).get(1))/2);
+		/*System.out.println("\nElegido: " + randomNumber + "\n");
+		System.out.println("Valor objetivo: " + problem.getDistance(lrc.get(randomNumber).get(0), lrc.get(randomNumber).get(1))/2);*/
 		//construir la solucion
 		int node1 = lrc.get(randomNumber).get(0);
 		int node2 = lrc.get(randomNumber).get(1);
@@ -80,7 +80,7 @@ public class GRASP {
 	 */
 	public Solution localSearch(Problem problem, Solution solution) {
 		Solution solutionStar;
-		System.out.println("\n2) Busqueda local:");
+		//System.out.println("\n2) Busqueda local:");
 		do {//repetir
 			solutionStar = (Solution) solution.clone();
 			int bestNode = -1;

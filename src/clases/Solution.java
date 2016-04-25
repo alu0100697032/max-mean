@@ -51,15 +51,19 @@ public class Solution implements Cloneable{
 	 * setNodeActive: fija un nodo como dentro de la solucion
 	 */
 	public void setNodeTrue(int node){
-		subSet.set(node, true);
-		solutionSize++;
+		if(!subSet.get(node)) {
+			subSet.set(node, true);
+			solutionSize++;
+		}
 	}
 	/**
 	 * setNodeFalse: fija un nodo como fuera de la solucion
 	 */
 	public void setNodeFalse(int node){
-		subSet.set(node, false);
-		solutionSize--;
+		if(subSet.get(node)) {
+			subSet.set(node, false);
+			solutionSize--;
+		}
 	}
 	/**
 	 * getNodeActive: devuelve si un nodo está o no en la solucion
