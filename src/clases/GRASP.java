@@ -2,8 +2,6 @@ package clases;
 import java.util.ArrayList;
 import java.util.Random;
 
-import javafx.util.Pair;
-
 /**
  * File name:GRASP.java
  * Package name: 
